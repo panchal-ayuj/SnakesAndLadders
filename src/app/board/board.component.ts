@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 
-
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
@@ -16,31 +15,27 @@ export class BoardComponent {
   diceRolled = false;
   rollValue: number = 0;
 
-
   snakesAndLadderStart: number[] = Array.from(
     { length: 10 },
     (_, i) => Math.floor(Math.random() * 99) + 2
   );
-
 
   snakesAndLadderEnd: number[] = Array.from(
     { length: 10 },
     (_, i) => Math.floor(Math.random() * 99) + 1
   );
 
-
   ngOnInit(): void {
     for (let i = 10; i < 100; i += 20) {
       for (let j = 0, k = 9; j < k; j++, k--) {
-        let temp = this.cells[i+j];
-        this.cells[i+j] = this.cells[i+k];
-        this.cells[i+k] = temp;
+        let temp = this.cells[i + j];
+        this.cells[i + j] = this.cells[i + k];
+        this.cells[i + k] = temp;
       }
     }
     console.log(this.snakesAndLadderStart);
     console.log(this.snakesAndLadderEnd);
   }
-
 
   isExists(cell: number) {
     const index = this.playersPos.indexOf(cell);
@@ -49,7 +44,6 @@ export class BoardComponent {
     }
     return '';
   }
-
 
   movePlayer(): void {
     // if (!this.diceRolled) {
@@ -77,7 +71,6 @@ export class BoardComponent {
     this.currentPlayer = (this.currentPlayer + 1) % this.noOfPlayer;
   }
 
-
   rollDice(): void {
     if (this.diceRolled) {
       return; // Prevent rolling the dice multiple times
@@ -94,7 +87,6 @@ export class BoardComponent {
     setTimeout(() => (this.diceRolled = false), 500);
   }
 
-
   resetGame(): void {
     this.playerPosition = 1;
     this.playersPos = [1, 1, 1, 1];
@@ -103,8 +95,32 @@ export class BoardComponent {
   }
 
   getPlayerIcon(player: string): string {
-    console.log(`assets/${player.toLowerCase()}.png`);
     return `assets/${player.toLowerCase()}.png`;
   }
 
+  isSnakeorLadderExists(cell: number) {
+    const index = this.snakesAndLadderStart.indexOf(cell);
+    return index != -1;
+  }
+
+  getSnakeOrLadder(cell: number) {
+    const index = this.snakesAndLadderStart.indexOf(cell);
+    const start = this.snakesAndLadderStart[index];
+    const end = this.snakesAndLadderEnd[index];
+    if (start > end) {
+      return {
+        img: '../assets/snake-icon.png',
+        value: end,
+        style:
+          'position: relative; right:6px; bottom:-4px;font-weight: 700; font-size: 8px;color:red;',
+      };
+    } else {
+      return {
+        img: '../assets/ladder-icon.png',
+        value: end,
+        style:
+          'position: relative; right:6px; bottom:-4px;font-weight: 700; font-size: 8px;color:green;',
+      };
+    }
+  }
 }
