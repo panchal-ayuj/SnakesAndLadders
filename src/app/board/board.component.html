@@ -1,0 +1,13 @@
+<!-- board.component.html -->
+<div class="board-container">
+  <div class="board">
+    <div *ngFor="let cell of cells" class="cell">
+      {{ isExists(cell) === "" ? cell : "" }}
+      <div *ngIf="isExists(cell) !== ''" class="player-icon">
+        <img [src]="getPlayerIcon(isExists(cell))" alt="Player Icon" />
+      </div>
+    </div>
+    <div class="roll-val">{{rollValue}}</div>
+    <button (click)="rollDice()" [disabled]="diceRolled">Roll</button>
+  </div>
+</div>
