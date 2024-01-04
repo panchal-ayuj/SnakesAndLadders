@@ -1,1 +1,30 @@
-<app-board></app-board>
+<div class="game-list" *ngIf="disp">
+  <h2>Choose a Game:</h2>
+  <ul>
+    <li routerLink="/oneboard" routerLinkActive="active" (click)="changeDisp()">
+      One Player Game
+    </li>
+    <li
+      routerLink="/twoboard"
+      routerLinkActive="active"
+      (click)="changeDisp()"
+    >
+      Two Player Game
+    </li>
+    <li
+      routerLink="/threeboard"
+      routerLinkActive="active"
+      (click)="changeDisp()"
+    >
+      Three Player Game
+    </li>
+    <li
+      routerLink="/board"
+      routerLinkActive="active"
+      (click)="changeDisp()"
+    >
+      Four Player Game
+    </li>
+  </ul>
+</div>
+<router-outlet></router-outlet>

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-board',
-  templateUrl: './board.component.html',
-  styleUrl: './board.component.scss',
+  selector: 'app-oneboard',
+  templateUrl: './oneboard.component.html',
+  styleUrl: './oneboard.component.scss',
 })
-export class BoardComponent {
+export class OneboardComponent {
   cells: number[] = Array.from({ length: 100 }, (_, i) => i + 1);
   playerPosition = 1;
-  noOfPlayer = 4;
-  players = ['Player1', 'Player2', 'Player3', 'Player4'];
-  playersPos = [1, 1, 1, 1];
+  noOfPlayer = 1;
+  players = ['Player1'];
+  playersPos = [1];
   currentPlayer = 0;
   diceRolled = false;
   rollValue: number = 0;
@@ -89,7 +89,7 @@ export class BoardComponent {
 
   resetGame(): void {
     this.playerPosition = 1;
-    this.playersPos = [1, 1, 1, 1];
+    this.playersPos = [1];
     this.currentPlayer = 0;
     this.diceRolled = false;
   }

@@ -1,16 +1,16 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-board',
-  templateUrl: './board.component.html',
-  styleUrl: './board.component.scss',
+  selector: 'app-threeboard',
+  templateUrl: './threeboard.component.html',
+  styleUrl: './threeboard.component.scss',
 })
-export class BoardComponent {
+export class ThreeboardComponent {
   cells: number[] = Array.from({ length: 100 }, (_, i) => i + 1);
   playerPosition = 1;
-  noOfPlayer = 4;
-  players = ['Player1', 'Player2', 'Player3', 'Player4'];
-  playersPos = [1, 1, 1, 1];
+  noOfPlayer = 3;
+  players = ['Player1', 'Player2', 'Player3'];
+  playersPos = [1, 1, 1];
   currentPlayer = 0;
   diceRolled = false;
   rollValue: number = 0;
@@ -89,7 +89,7 @@ export class BoardComponent {
 
   resetGame(): void {
     this.playerPosition = 1;
-    this.playersPos = [1, 1, 1, 1];
+    this.playersPos = [1, 1, 1];
     this.currentPlayer = 0;
     this.diceRolled = false;
   }
