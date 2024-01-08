@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-oneboard',
@@ -9,11 +9,13 @@ export class OneboardComponent {
   cells: number[] = Array.from({ length: 100 }, (_, i) => i + 1);
   playerPosition = 1;
   noOfPlayer = 1;
-  players = ['Player1'];
+  players = ['player1'];
   playersPos = [1];
   currentPlayer = 0;
   diceRolled = false;
   rollValue: number = 0;
+  @ViewChild('dice') dice: any; // Reference to the dice element in the template
+
 
   snakesAndLadderStart: number[] = Array.from(
     { length: 10 },
@@ -73,18 +75,40 @@ export class OneboardComponent {
 
   rollDice(): void {
     if (this.diceRolled) {
-      return; // Prevent rolling the dice multiple times
+      return;
     }
 
-    const diceRoll = Math.floor(Math.random() * 6) + 1;
-    this.rollValue = diceRoll;
-    this.playersPos[this.currentPlayer] += diceRoll; //
+    // Play dice roll sound
+    const diceRollSound = new Audio('assets/dice-roll-sound.mp3');
+    diceRollSound.play();
+
+    // Roll dice animation
+    this.rollValue = this.rollAnimation();
+
+    this.playersPos[this.currentPlayer] += this.rollValue;
     this.playerPosition = this.playersPos[this.currentPlayer];
-    // Implement your logic to handle snake and ladder
-    // (You'll need to define the snakes and ladders positions)
     this.movePlayer();
     this.diceRolled = true;
-    setTimeout(() => (this.diceRolled = false), 500);
+    setTimeout(() => {
+      this.diceRolled = false;
+    }, 500);
+  }
+
+  private rollAnimation(): number {
+    const diceElement = this.dice.nativeElement;
+    const rollValues = [1, 2, 3, 4, 5, 6];
+    const randomIndex = Math.floor(Math.random() * rollValues.length);
+    const finalValue = rollValues[randomIndex];
+
+    // Add animation class to dice element
+    diceElement.classList.add('dice-roll-animation');
+
+    // Remove animation class after animation duration
+    setTimeout(() => {
+      diceElement.classList.remove('dice-roll-animation');
+    }, 500);
+
+    return finalValue;
   }
 
   resetGame(): void {
@@ -97,6 +121,19 @@ export class OneboardComponent {
   getPlayerIcon(player: string): string {
     return `assets/${player.toLowerCase()}.png`;
   }
+
+  getPlayerImg(cell: number){
+    const pos = ["left:-15px;", "left:-21px;", "left:-14px;", "left:-7px;"]
+    const initialStyle = "height: 32px; width: 32px;position:absolute;top:-17px;";
+    const standingplayers = []
+    for(let i = 0; i < this.noOfPlayer; i++){
+      if(cell == this.playersPos[i]){
+        standingplayers.push({"img": "assets/"+this.players[i]+".png", "style": initialStyle+pos[i]});
+      }
+    }
+    return standingplayers;
+  }
+
 
   isSnakeorLadderExists(cell: number) {
     const index = this.snakesAndLadderStart.indexOf(cell);

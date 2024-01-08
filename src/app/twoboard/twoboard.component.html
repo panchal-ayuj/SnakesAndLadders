@@ -3,10 +3,16 @@
   <div class="board">
     <div *ngFor="let cell of cells" class="cell">
       {{ isExists(cell) === "" && !isSnakeorLadderExists(cell) ? cell : "" }}
-      <div *ngIf="isExists(cell) !== ''" class="player-icon">
-        <img [src]="getPlayerIcon(isExists(cell))" alt="Player Icon" />
+      <div *ngIf="isExists(cell)" class="cell">
+        <div style="position: absolute;">
+          <div *ngFor="let player of getPlayerImg(cell)">
+            <div [style]="player.style">
+              <img [src]="player.img" style="height: 100%;" alt="image">
+            </div>
+          </div>
+        </div>
       </div>
-
+      
       <div
         *ngIf="isSnakeorLadderExists(cell)"
         style="position: relative; left: 4px; top: 3px"
@@ -21,7 +27,12 @@
         }}</span>
       </div>
     </div>
-    <div class="roll-val">{{ rollValue }}</div>
-    <button (click)="rollDice()" [disabled]="diceRolled">Roll</button>
+    <div class="roll-container">
+      <div class="dice" #dice>{{ rollValue }}</div>
+      <button (click)="rollDice()" [disabled]="diceRolled">Roll</button>
+      <div class="current-player-icon">
+        <img [src]="getPlayerIcon(players[currentPlayer])" style="height: 50px;" alt="current player">
+      </div>
+    </div>
   </div>
 </div>

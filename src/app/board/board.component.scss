@@ -9,7 +9,7 @@
     display: grid;
     grid-template-columns: repeat(10, 50px);
     grid-template-rows: repeat(10, 50px);
-    gap: 5px;
+    gap: 4px;
   }
 
   .cell {
@@ -60,23 +60,45 @@
     background-color: rgb(55, 241, 26);
     border-radius: 15%;
   }
-  .roll-val {
+  /* board.component.scss */
+  .dice {
+    border: 1px solid black;
+    text-align: center;
+    font-size: 24px;
+    cursor: pointer;
     font-size: 24px;
     font-weight: bold;
     color: #fff;
     background-color: #3498db;
     border-radius: 8px;
     text-align: center;
-    padding-top: 8px;
-    width: 50px; /* Adjust width as needed */
+    padding: 12px;
     margin-left: auto;
     margin-right: auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease-in-out;
   }
-  
-  .roll-val:hover {
-    background-color: #2980b9;
+
+  .dice-roll-animation {
+    animation: rollAnimation 0.5s ease-out;
+  }
+
+  @keyframes rollAnimation {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(180deg);
+    }
+    50% {
+      transform: rotate(360deg);
+    }
+    75% {
+      transform: rotate(540deg);
+    }
+    100% {
+      transform: rotate(720deg);
+    }
   }
 }
 /* dice.component.scss */
@@ -84,10 +106,11 @@ button {
   padding: 8px;
   font-size: 18px;
   color: #fff;
-  background-color: #4CAF50; /* Green */
+  background-color: #4caf50; /* Green */
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  margin-left: 8px;
   transition: background-color 0.3s ease-in-out;
 
   &:hover {
@@ -119,9 +142,17 @@ button {
   max-height: 100%;
 }
 
-
 .destination-cell {
   width: 8px;
   height: 8px;
   color: red;
+}
+/* board.component.scss */
+.roll-container {
+  display: flex;
+  align-items: center;
+}
+
+.current-player-icon {
+  margin-left: 20px;
 }
